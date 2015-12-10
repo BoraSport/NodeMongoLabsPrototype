@@ -2,53 +2,44 @@ extends layout
 
 block content
     h1= title
-    p Welcome to our test
+    p Test page for fault monitoring.
 
     // Wrapper
     #wrapper
 
-        // USER INFO
-        #userInfo
-            h2 User Info
+        // FAULT INFORMATION
+        #faultInfo
+            h2 Fault Information
             p
-                strong Name:
-                |  <span id='userInfoName'></span>
+                strong Identifier:
+                |  <span id='faultInfoId'></span>
                 br
-                strong Age:
-                |  <span id='userInfoAge'></span>
+                strong URL:
+                |  <span id='faultInfoUrl'></span>
                 br
-                strong Gender:
-                |  <span id='userInfoGender'></span>
-                br
-                strong Location:
-                |  <span id='userInfoLocation'></span>
-        // /USER INFO
+                strong Device:
+                |  <span id='faultInfoDevice'></span>
+        // /FAULT INFORMATION
 
-        // USER LIST
-        h2 User List
-        #userList
+        // FAULT LIST
+        h2 FAULT LIST
+        #faultList
             table
                 thead
-                    th UserName
-                    th Email
+                    th URL
+                    th Device
                     th Delete?
                 tbody
-        // /USER LIST
+        // /FAULT LIST
 
-        // ADD USER
-        h2 Add User
-        #addUser
+        // ADD FAULT
+        h2 Add Fault
+        #addFault
             fieldset
-                input#inputUserName(type='text', placeholder='Username')
-                input#inputUserEmail(type='text', placeholder='Email')
+                input#inputFaultUrl(type='text', placeholder='URL')
+                input#inputDevice(type='text', placeholder='Device')
                 br
-                input#inputUserFullname(type='text', placeholder='Full Name')
-                input#inputUserAge(type='text', placeholder='Age')
-                br
-                input#inputUserLocation(type='text', placeholder='Location')
-                input#inputUserGender(type='text', placeholder='gender')
-                br
-                button#btnAddUser Add User
-        // /ADD USER
+                button#btnAddFault Add Fault
+        // /ADD FAULT
 
     // /WRAPPER

@@ -2,22 +2,22 @@ var express = require('express');
 var router = express.Router();
 
 /*
- * GET userlist.
+ * GET faultlist.
  */
-router.get('/userlist', function(req, res) {
+router.get('/faultlist', function(req, res) {
     var db = req.db;
-    var collection = db.get('userlist');
+    var collection = db.get('faultsTEST');
     collection.find({},{},function(e,docs){
         res.json(docs);
     });
 });
 
 /*
- * POST to adduser.
+ * POST to addfault.
  */
-router.post('/adduser', function(req, res) {
+router.post('/addfault', function(req, res) {
     var db = req.db;
-    var collection = db.get('userlist');
+    var collection = db.get('faultsTEST');
     collection.insert(req.body, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
@@ -26,13 +26,13 @@ router.post('/adduser', function(req, res) {
 });
 
 /*
- * DELETE to deleteuser.
+ * DELETE to deletefault.
  */
-router.delete('/deleteuser/:id', function(req, res) {
+router.delete('/deletefault/:id', function(req, res) {
     var db = req.db;
-    var collection = db.get('userlist');
-    var userToDelete = req.params.id;
-    collection.remove({ '_id' : userToDelete }, function(err) {
+    var collection = db.get('faultsTEST');
+    var faultToDelete = req.params.id;
+    collection.remove({ '_id' : faultToDelete }, function(err) {
         res.send((err === null) ? { msg: '' } : { msg:'error: ' + err });
     });
 });

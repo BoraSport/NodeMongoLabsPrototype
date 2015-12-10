@@ -1,16 +1,24 @@
+// TEAGUE - Global Design Studio
+// Updates contact wschramm@teague.com
+// Original sample site from Christopher Buecheler: https://github.com/cwbuecheler/node-tutorial-for-frontend-devs
+// Last updated 2015-12-10
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-// Database
+
+// MongoLab Database Connection
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/nodetest2');
+// var db = monk('mongodb://wschramm:mOSEGeno7mentiAny@ds046818-a0.mongolab.com:46818,ds046818-a1.mongolab.com:46816/connectedobjdb?replicaSet=rs-ds046818');
+var db = monk('mongodb://DataIn:q4UnAZfl6oi1XHKHRnGgfiLr@ds046818-a0.mongolab.com:46818,ds046818-a1.mongolab.com:46816/connectedobjdb?replicaSet=rs-ds046818');
+// var db = monk('localhost:27017/nodetest2');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var faults = require('./routes/faults');
 
 var app = express();
 
@@ -33,7 +41,7 @@ app.use(function(req,res,next){
 });
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/faults', faults);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
