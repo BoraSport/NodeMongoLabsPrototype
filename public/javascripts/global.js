@@ -5,6 +5,9 @@ var faultListData = [];
 // DOM Ready =============================================================
 $(document).ready(function() {
 
+	// Warning notice about using the TEAGUE internal network
+	console.log("Warning! This page will not run on the TEAGUE internal network");
+
     // Populate the fault table on initial page load
     populateTable();
 

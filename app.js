@@ -3,6 +3,12 @@
 // Original sample site from Christopher Buecheler: https://github.com/cwbuecheler/node-tutorial-for-frontend-devs
 // Last updated 2015-12-10
 
+// Warning and Credits
+console.log("CODE Fault Simulator: TEAGUE - Global Design Studio");
+console.log("Warning! This page will not run on the TEAGUE internal network");
+console.log("Press 'control-c' to exit");
+
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
