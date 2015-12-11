@@ -17,9 +17,21 @@ $(document).ready(function() {
     // Delete Fault link click
     $('#faultList table tbody').on('click', 'td a.linkdeletefault', deleteFault);
 
+    // Stop Polling Faults click
+    $('#btnStopPolling').on('click', stopPollFaults);
+
 });
 
+// Polling interval to find new records in the database
+var refreshId = setInterval(function(){populateTable();}, 1000);
+
 // Functions =============================================================
+
+// Stop polling the database for faults
+function stopPollFaults() {
+	console.log("Stop polling faults");
+    clearInterval(refreshId);
+};
 
 // Fill table with data
 function populateTable() {
@@ -35,7 +47,9 @@ function populateTable() {
 
         // For each item in our JSON, add a table row and cells to the content string
         $.each(data, function(){
+        	var lastRecordId = this._id
             tableContent += '<tr>';
+            tableContent += '<td>' + this.datetime + '</td>';
             tableContent += '<td><a href="#" class="linkshowfault" rel="' + this.url + '" title="Show Details">' + this.url + '</a></td>';
             tableContent += '<td>' + this.device + '</td>';
             tableContent += '<td><a href="#" class="linkdeletefault" rel="' + this._id + '">delete</a></td>';
@@ -46,6 +60,7 @@ function populateTable() {
         $('#faultList table tbody').html(tableContent);
     });
 };
+
 
 // Show Fault Info
 function showFaultInfo(event) {
@@ -64,6 +79,7 @@ function showFaultInfo(event) {
 
     //Populate Info Box
     $('#faultInfoId').text(thisFaultObject._id);
+    $('#faultInfoDatetime').text(thisFaultObject.datetime);
     $('#faultInfoUrl').text(thisFaultObject.url);
     $('#faultInfoDevice').text(thisFaultObject.device);
 

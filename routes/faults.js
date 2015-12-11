@@ -7,7 +7,9 @@ var router = express.Router();
 router.get('/faultlist', function(req, res) {
     var db = req.db;
     var collection = db.get('faultsTEST');
-    collection.find({},{},function(e,docs){
+    // example = collection.find({}, {sort: {date: -1}, limit: 8}, function(e, docs){
+    // original = collection.find({},{},function(e,docs){
+    collection.find({},{sort: {_id: -1}, limit: 5},function(e,docs){
         res.json(docs);
     });
 });

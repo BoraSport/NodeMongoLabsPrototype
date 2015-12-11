@@ -14,6 +14,9 @@ block content
                 strong Identifier:
                 |  <span id='faultInfoId'></span>
                 br
+                strong Timestamp:
+                |  <span id='faultInfoDatetime'></span>
+                br
                 strong URL:
                 |  <span id='faultInfoUrl'></span>
                 br
@@ -22,14 +25,16 @@ block content
         // /FAULT INFORMATION
 
         // FAULT LIST
-        h2 FAULT LIST
+        h2 FAULT LIST     
         #faultList
             table
                 thead
+                    th Timestamp
                     th URL
                     th Device
                     th Delete?
                 tbody
+        button#btnStopPolling Stop Polling
         // /FAULT LIST
 
         // ADD FAULT

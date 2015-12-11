@@ -13,9 +13,7 @@ var bodyParser = require('body-parser');
 // MongoLab Database Connection
 var mongo = require('mongodb');
 var monk = require('monk');
-// var db = monk('mongodb://wschramm:mOSEGeno7mentiAny@ds046818-a0.mongolab.com:46818,ds046818-a1.mongolab.com:46816/connectedobjdb?replicaSet=rs-ds046818');
 var db = monk('mongodb://DataIn:q4UnAZfl6oi1XHKHRnGgfiLr@ds046818-a0.mongolab.com:46818,ds046818-a1.mongolab.com:46816/connectedobjdb?replicaSet=rs-ds046818');
-// var db = monk('localhost:27017/nodetest2');
 
 var routes = require('./routes/index');
 var faults = require('./routes/faults');
