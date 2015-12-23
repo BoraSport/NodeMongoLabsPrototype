@@ -6,7 +6,7 @@ var router = express.Router();
    res.render('index');
 });
 
-/* GET home page. */
+/* GET debug page. */
 router.get('/debug', function(req, res) {
   res.render('debug', { title: 'CODE - FAULT DEBUGER' });
 });
