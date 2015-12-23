@@ -3,12 +3,12 @@ var router = express.Router();
 
 /* GET home page. */
  router.get('/', function(req, res) {
-   res.render('index', { title: 'CODE - FAULT SIMULATION' });
+   res.render('index');
 });
 
-/* GET testpage. */
-router.get('/testpage', function(req, res) {
-  res.render('testpage');
+/* GET home page. */
+router.get('/debug', function(req, res) {
+  res.render('debug', { title: 'CODE - FAULT DEBUGER' });
 });
 
 module.exports = router;

@@ -1,0 +1,50 @@
+extends layout
+
+block content
+    h1= title
+    p Test page for fault monitoring.
+
+    // Wrapper
+    #wrapper
+
+        // FAULT INFORMATION
+        #faultInfo
+            h2 Fault Information
+            p
+                strong Identifier:
+                |  <span id='faultInfoId'></span>
+                br
+                strong Timestamp:
+                |  <span id='faultInfoDatetime'></span>
+                br
+                strong URL:
+                |  <span id='faultInfoUrl'></span>
+                br
+                strong Device:
+                |  <span id='faultInfoDevice'></span>
+        // /FAULT INFORMATION
+
+        // FAULT LIST
+        h2 FAULT LIST     
+        #faultList
+            table
+                thead
+                    th Timestamp
+                    th URL
+                    th Device
+                    th Delete?
+                tbody
+        button#btnStopPolling Stop Polling
+        // /FAULT LIST
+
+        // ADD FAULT
+        h2 Add Fault
+        #addFault
+            fieldset
+                input#inputFaultUrl(type='text', placeholder='URL')
+                input#inputDevice(type='text', placeholder='Device')
+                br
+                button#btnAddFault Add Fault
+        // /ADD FAULT
+
+    // /WRAPPER
