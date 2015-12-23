@@ -14,6 +14,20 @@ router.get('/faultlist', function(req, res) {
     });
 });
 
+
+/*
+ * GET devicefault.
+ */
+router.get('/devicefault', function(req, res) {
+    var db = req.db;
+    var collection = db.get('faultsTEST');
+    // example = collection.find({}, {sort: {date: -1}, limit: 8}, function(e, docs){
+    // original = collection.find({},{},function(e,docs){
+    collection.find({},{sort: {_id: -1}, limit: 1},function(e,docs){
+        res.json(docs);
+    });
+});
+
 /*
  * POST to addfault.
  */

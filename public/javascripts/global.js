@@ -26,7 +26,7 @@ $(document).ready(function() {
 });
 
 // Polling interval to find new records in the database
-var refreshId = setInterval(function(){populateTable();}, 1000);
+var refreshId = setInterval(function(){populateTable();}, 5000);
 
 // Functions =============================================================
 
