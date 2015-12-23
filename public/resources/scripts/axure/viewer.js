@@ -1,8 +1,6 @@
 ﻿// ******* SITEMAP TOOLBAR VIEWER ACTIONS ******** //
-$axure.internal(function ($ax) {
-    var userTriggeredEventNames = ['onClick', 'onDoubleClick', 'onMouseOver', 'onMouseMove', 'onMouseOut', 'onMouseDown', 'onMouseUp',
-        'onKeyDown', 'onKeyUp', 'onFocus', 'onLostFocus', 'onTextChange', 'onSelectionChange', 'onSelectedChange', 'onSelect', 'onUnselect',
-        'onSwipeLeft', 'onSwipeRight', 'onSwipeUp', 'onSwipeDown', 'onDragStart', 'onDrag', 'onDragDrop', 'onScroll', 'onContextMenu', 'onMouseHover', 'onLongClick'];
+$axure.internal(function($ax) {
+    var userTriggeredEventNames = ['onClick', 'onDoubleClick', 'onMouseOver', 'onMouseMove', 'onMouseOut', 'onMouseDown', 'onMouseUp', 'onKeyDown', 'onKeyUp', 'onFocus', 'onLostFocus', 'onTextChange', 'onSelectionChange', 'onCheckedChange', 'onSwipeLeft', 'onSwipeRight', 'onSwipeUp', 'onSwipeDown', 'onDragStart', 'onDrag', 'onDragDrop', 'onScroll', 'onContextMenu', 'onMouseHover', 'onLongClick'];
 
     $ax.messageCenter.addMessageListener(function(message, data) {
         //If annotation toggle message received from sitemap, toggle footnotes
@@ -46,7 +44,7 @@ $axure.internal(function ($ax) {
                 for(var index in userTriggeredEventNames) {
                     if(obj.interactionMap[userTriggeredEventNames[index]]) return true;
                 }
-            } else if ($ax.public.fn.IsVector(obj.type) && obj.referencePageUrl) {
+            } else if (obj.type == 'flowShape' && obj.referencePageUrl) {
                 return true;
             }
             return false;

@@ -13,7 +13,7 @@ $axure.internal(function($ax) {
             delete panelToSrc[panelId];
         }
         if(!keepShown) {
-            $ax.action.addAnimation(panelId, $ax.action.queueTypes.fade, function() {
+            $ax.action.addAnimation(panelId, function() {
                 $ax('#' + panelId).hide();
             });
         }
@@ -219,20 +219,13 @@ $axure.internal(function($ax) {
     };
     _placeholderManager.registerPlaceholder = _registerPlaceholder;
 
-    _placeholderManager.refreshPlaceholder = function (elementId) {
-        var info = idToPlaceholderInfo[elementId];
-        if (!info || !info.active) return;
-        $ax.style.SetWidgetPlaceholder(elementId, true, info.text, info.password);
-    }
-
     var _updatePlaceholder = function(elementId, active, clearText) {
         var inputId = $ax.repeater.applySuffixToElementId(elementId, '_input');
 
         var info = idToPlaceholderInfo[elementId];
         if(!info || info.active == active) return;
         info.active = active;
-        var value = active ? info.text : clearText ? '' : $jobj(inputId).val();
-        $ax.style.SetWidgetPlaceholder(elementId, active, value, info.password);
+        $ax.style.SetWidgetPlaceholder(elementId, active, active ? info.text : clearText ? '' : $jobj(inputId).val(), info.password);
     };
     _placeholderManager.updatePlaceholder = _updatePlaceholder;
 

@@ -22,7 +22,7 @@ $axure.internal(function($ax) {
     }
 
     $ax.legacy.SuppressBubble = function(event) {
-        if(IE_10_AND_BELOW) {
+        if(IE) {
             window.event.cancelBubble = true;
             window.event.returnValue = false;
         } else {
@@ -95,7 +95,7 @@ $axure.internal(function($ax) {
         window.document.body.style.backgroundColor = oldColor;
     };
 
-    $ax.legacy.getAbsoluteLeft = function(currentNode, elementId) {
+    $ax.legacy.getAbsoluteLeft = function(currentNode) {
         var oldDisplay = currentNode.css('display');
         var displaySet = false;
         if(oldDisplay == 'none') {
@@ -103,34 +103,13 @@ $axure.internal(function($ax) {
             displaySet = true;
         }
         var left = currentNode.offset().left;
-
-        // Special Layer code
-        if($ax.getTypeFromElementId(elementId) == 'layer') {
-            var first = true;
-            var children = currentNode.children();
-            for(var i = 0; i < children.length; i++) {
-                var child = $(children[i]);
-                var subDisplaySet = false;
-                if(child.css('display') == 'none') {
-                    child.css('display', '');
-                    subDisplaySet = true;
-                }
-                if(first) left = child.offset().left;
-                else left = Math.min(child.offset().left, left);
-                first = false;
-
-                if(subDisplaySet) child.css('display', 'none');
-            }
-        }
-
-        if (displaySet) currentNode.css('display', oldDisplay);
-
+        if(displaySet) currentNode.css('display', oldDisplay);
         var body = $('body');
         if(body.css('position') == 'relative') left -= (Number(body.css('left').replace('px', '')) + Math.max(0, ($(window).width() - body.width()) / 2));
         return left;
     };
 
-    $ax.legacy.getAbsoluteTop = function(currentNode, elementId) {
+    $ax.legacy.getAbsoluteTop = function(currentNode) {
         var oldDisplay = currentNode.css('display');
         var displaySet = false;
         if(oldDisplay == 'none') {
@@ -138,26 +117,6 @@ $axure.internal(function($ax) {
             displaySet = true;
         }
         var top = currentNode.offset().top;
-
-        // Special Layer code
-        if ($ax.getTypeFromElementId(elementId) == 'layer') {
-            var first = true;
-            var children = currentNode.children();
-            for (var i = 0; i < children.length; i++) {
-                var child = $(children[i]);
-                var subDisplaySet = false;
-                if (child.css('display') == 'none') {
-                    child.css('display', '');
-                    subDisplaySet = true;
-                }
-                if (first) top = child.offset().top;
-                else top = Math.min(child.offset().top, top);
-                first = false;
-
-                if (subDisplaySet) child.css('display', 'none');
-            }
-        }
-
         if(displaySet) currentNode.css('display', oldDisplay);
         return top;
     };
@@ -178,14 +137,13 @@ $axure.internal(function($ax) {
 
     $ax.legacy.GetScrollable = function(target) {
         var $target = $(target);
+        var current = $target;
         var last = $target;
-        // Start past inital target. Can't scroll to target in itself, must be some ancestor.
-        var current = last.parent();
 
         while(!current.is('body') && !current.is('html')) {
             var elementId = current.attr('id');
             var diagramObject = elementId && $ax.getObjectFromElementId(elementId);
-            if (diagramObject && $ax.public.fn.IsDynamicPanel(diagramObject.type) && diagramObject.scrollbars != 'none') {
+            if(diagramObject && diagramObject.type == 'dynamicPanel' && diagramObject.scrollbars != 'none') {
                 //returns the panel diagram div which handles scrolling
                 return window.document.getElementById(last.attr('id'));
             }
@@ -193,7 +151,7 @@ $axure.internal(function($ax) {
             current = current.parent();
         }
         // Need to do this because of ie
-        if(IE_10_AND_BELOW) return window.document.documentElement;
+        if(IE) return window.document.documentElement;
         else return window.document.body;
     };
 

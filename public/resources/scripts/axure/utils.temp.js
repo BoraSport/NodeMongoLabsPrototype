@@ -69,11 +69,11 @@ $axure.internal(function($ax) {
     if(!$ax.document.configuration.linkFlowsToPages && !$ax.document.configuration.linkFlowsToPagesNewWindow) return;
 
     $(window.document).ready(function() {
-        $ax(function (dObj) { return ($ax.public.fn.IsVector(dObj.type) || $ax.public.fn.IsSnapshot(dObj.type)) && dObj.referencePageUrl; }).each(function (dObj, elementId) {
+        $ax(function(dObj) { return dObj.type == 'flowShape' && dObj.referencePageUrl; }).each(function(dObj, elementId) {
 
             var elementIdQuery = $('#' + elementId);
 
-            if($ax.document.configuration.linkFlowsToPages && !$ax.event.HasClick(dObj)) {
+            if($ax.document.configuration.linkFlowsToPages) {
                 elementIdQuery.css("cursor", "pointer");
                 elementIdQuery.click(function() {
                     $ax.navigate({

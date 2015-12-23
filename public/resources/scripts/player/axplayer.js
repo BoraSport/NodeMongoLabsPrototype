@@ -48,7 +48,7 @@ function setUpController() {
         var toAdd = '';
         for(var globalVarName in _globalVars) {
             var val = _globalVars[globalVarName];
-            if(val != null) {
+            if(val != null && val.length > 0) {
                 if(toAdd.length > 0) toAdd += '&';
                 toAdd += globalVarName + '=' + encodeURIComponent(val);
             }

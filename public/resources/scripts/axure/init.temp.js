@@ -65,12 +65,10 @@
             }
         });
 
-        window.lastFocusedClickable = null;
-        var _lastFocusedClickableSelector = 'div[tabIndex=0], img[tabIndex=0], a';
+        var lastFocusedClickable;
         var shouldOutline = true;
 
-        $ax(function (dObj) { return dObj.tabbable; }).each(function (dObj, elementId) {
-            if ($ax.public.fn.IsLayer(dObj.type)) $ax.event.layerMapFocus(dObj, elementId);
+        $ax(function(dObj) { return dObj.tabbable; }).each(function(dObj, elementId) {
             var focusableId = $ax.event.getFocusableWidgetOrChildId(elementId);
             $('#' + focusableId).attr("tabIndex", 0);
         });
@@ -83,23 +81,23 @@
             shouldOutline = true;
         });
 
-        $(_lastFocusedClickableSelector).focus(function () {
+        $('div[tabIndex=0], img[tabIndex=0], a').focus(function() {
             if(shouldOutline) {
                 $(this).css('outline', '');
             } else {
                 $(this).css('outline', 'none');
             }
 
-            window.lastFocusedClickable = this;
+            lastFocusedClickable = this;
         });
 
-        $(_lastFocusedClickableSelector).blur(function () {
-            if(window.lastFocusedClickable == this) window.lastFocusedClickable = null;
+        $('div[tabIndex=0], img[tabIndex=0], a').blur(function() {
+            if(lastFocusedClickable == this) lastFocusedClickable = null;
         });
 
         $(window.document).bind('keyup', function(e) {
             if(e.keyCode == '13' || e.keyCode == '32') {
-                if(window.lastFocusedClickable) $(window.lastFocusedClickable).click();
+                if(lastFocusedClickable) $(lastFocusedClickable).click();
             }
         });
 
@@ -120,7 +118,7 @@
             });
 
             $ax(function(diagramObject) {
-                return $ax.public.fn.IsDynamicPanel(diagramObject.type) && diagramObject.scrollbars != 'none';
+                return diagramObject.type == 'dynamicPanel' && diagramObject.scrollbars != 'none';
             }).$().children().bind('touchstart', function() {
                 var target = this;
                 var top = target.scrollTop;
@@ -131,7 +129,7 @@
 
         if(OS_MAC && WEBKIT) {
             $ax(function(diagramObject) {
-                return $ax.public.fn.IsComboBox(diagramObject.type);
+                return diagramObject.type == 'comboBox';
             }).each(function(obj, id) {
                 $jobj($ax.INPUT(id)).css('-webkit-appearance', 'menulist-button').css('border-color', '#999999');
             });
@@ -141,15 +139,11 @@
         $ax.event.initialize();
         $ax.style.initialize();
         $ax.visibility.initialize();
-        $ax.repeater.initialize();
         $ax.dynamicPanelManager.initialize(); //needs to be called after visibility is initialized
         $ax.adaptive.initialize();
         $ax.loadDynamicPanelsAndMasters();
         $ax.adaptive.loadFinished();
-        var start = (new Date()).getTime();
-        $ax.repeater.initRefresh();
-        var end = (new Date()).getTime();
-        console.log('loadTime: ' + (end - start) / 1000);
+        $ax.repeater.init();
         $ax.style.prefetch();
 
         $(window).resize();

@@ -18,7 +18,7 @@
         else $ax.postAdaptiveViewChanged();
     };
 
-    var _handleResize = function(forceSwitchTo) {
+    var _handleResize = function() {
         if(!_auto) return;
 
         var $window = $(window);
@@ -28,7 +28,7 @@
         var toView = _getAdaptiveView(width, height);
         var toViewId = toView && toView.id;
 
-        _switchView(toViewId, forceSwitchTo);
+        _switchView(toViewId);
     };
 
     var _setAuto = $ax.adaptive.setAuto = function(val) {
@@ -42,17 +42,14 @@
         if(imageUrl.indexOf(".png") > -1) $ax.utils.fixPng(imageQuery[0]);
     };
 
-    var _switchView = function(viewId, forceSwitchTo) {
+    var _switchView = function(viewId) {
         var previousViewId = $ax.adaptive.currentViewId;
         if(typeof previousViewId == 'undefined') previousViewId = '';
         if(typeof viewId == 'undefined') viewId = '';
-        if (viewId == previousViewId) {
-            if(forceSwitchTo) $ax.postAdaptiveViewChanged(forceSwitchTo);
-            return;
-        }
+        if(viewId == previousViewId) return;
 
         $ax('*').each(function(obj, elementId) {
-            if (!$ax.public.fn.IsTreeNodeObject(obj.type)) return;
+            if(obj.type != 'treeNodeObject') return;
             if(!obj.hasOwnProperty('isExpanded')) return;
 
             var query = $ax('#' + elementId);
@@ -61,23 +58,12 @@
             query.expanded(defaultExpanded);
         });
 
-        // reset all the positioning on the style tags, including size and transformation
+        // reset all the positioning on the style tags
         $axure('*').each(function(diagramObject, elementId) {
             var element = document.getElementById(elementId);
             if(element && !diagramObject.isContained) {
-                var resetCss = {
-                    top: "", left: "", width: "", height: "",
-                    transform: "", webkitTransform: "", MozTransform: "", msTransform: "", OTransform: ""
-                };
-                var query = $(element);
-                var children = query.children();
-                var sketchyImage = $('#' + $ax.repeater.applySuffixToElementId(elementId, '_image_sketch'));
-                var textChildren = query.children('div.text');
-
-                query.css(resetCss);
-                if(children) children.css(resetCss);
-                if(sketchyImage) sketchyImage.css(resetCss);
-                if(textChildren) textChildren.css(resetCss);
+                element.style.top = "";
+                element.style.left = "";
 
                 $ax.dynamicPanelManager.resetFixedPanel(diagramObject, element);
                 $ax.dynamicPanelManager.resetAdaptivePercentPanel(diagramObject, element);
@@ -89,10 +75,6 @@
             $ax.style.clearAdaptiveStyles();
             $('*').removeClass(previousViewId);
         }
-
-        $axure('*').each(function(obj, elementId) {
-            $ax.style.updateElementIdImageStyle(elementId); // When image override exists, fix styling/borders
-        });
 
         // reset all the images only if we're going back to the default view
         if(!viewId) {
@@ -136,7 +118,7 @@
         }
 
         $ax.adaptive.triggerEvent('viewChanged', {});
-        if(_loadFinished) $ax.viewChangePageAndMasters(forceSwitchTo);
+        if(_loadFinished) $ax.viewChangePageAndMasters();
     };
 
     // gets if input is hidden due to sketch
@@ -285,10 +267,9 @@
             $ax.style.setAdaptiveStyle(elementId, adaptiveStyle);
         }
 
-        var scriptId = $ax.repeater.getScriptIdFromElementId(elementId);
-        if(compoundStyle.limbo && !diagramObject.isContained) limboIds[scriptId] = true;
+        if(compoundStyle.limbo && !diagramObject.isContained) limboIds[elementId] = true;
         // sigh, javascript. we need the === here because undefined means not overriden
-        if(compoundStyle.visible === false) hiddenIds[scriptId] = true;
+        if(compoundStyle.visible === false) hiddenIds[elementId] = true;
     };
 
     var _matchImage = function(id, images, viewIdChain, state) {
@@ -389,13 +370,6 @@
         }
     });
 
-    $ax.adaptive.setAdaptiveView = function(view) {
-        var viewIdForSitemapToUnderstand = view == 'auto' ? undefined : (view == 'default' ? '' : view);
-
-        if(!_isAdaptiveInitialized()) {
-            _initialViewToLoad = viewIdForSitemapToUnderstand;
-        } else _handleLoadViewId(viewIdForSitemapToUnderstand);
-    };
 
     $ax.adaptive.initialize = function() {
         _views = $ax.document.adaptiveViews;
@@ -421,13 +395,13 @@
         });
     };
 
-    var _handleLoadViewId = function (loadViewId, forceSwitchTo) {
+    var _handleLoadViewId = function(loadViewId) {
         if(typeof loadViewId != 'undefined') {
             _setAuto(false);
-            _switchView(loadViewId != 'default' ? loadViewId : '', forceSwitchTo);
+            _switchView(loadViewId != 'default' ? loadViewId : '');
         } else {
             _setAuto(true);
-            _handleResize(forceSwitchTo);
+            _handleResize();
         }
     };
 });

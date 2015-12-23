@@ -1,7 +1,7 @@
 // TEAGUE - Global Design Studio
 // Updates contact wschramm@teague.com
 // Original sample site from Christopher Buecheler: https://github.com/cwbuecheler/node-tutorial-for-frontend-devs
-// Last updated 2015-12-22
+// Last updated 2015-12-23
 
 // Warning and Credits
 console.log("CODE Fault Simulator: TEAGUE - Global Design Studio");
