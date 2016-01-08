@@ -19,7 +19,8 @@ var bodyParser = require('body-parser');
 // MongoLab Database Connection
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('mongodb://DataIn:q4UnAZfl6oi1XHKHRnGgfiLr@ds046818-a0.mongolab.com:46818,ds046818-a1.mongolab.com:46816/connectedobjdb?replicaSet=rs-ds046818');
+// Example DB Connection string, replace with your own data
+var db = monk('mongodb://DataIn:nnnnnnnnnnnnnnnnnn.mongolab.com:46818,nnnnnnnnn-a1.mongolab.com:46816/connectedobjdb?replicaSet=rs-ds0000000');
 
 var routes = require('./routes/index');
 var faults = require('./routes/faults');
