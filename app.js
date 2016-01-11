@@ -20,6 +20,7 @@ var bodyParser = require('body-parser');
 var mongo = require('mongodb');
 var monk = require('monk');
 // Example DB Connection string, replace with your own data
+// Example DB Connection string, replace with your own data
 var db = monk('mongodb://DataIn:nnnnnnnnnnnnnnnnnn.mongolab.com:46818,nnnnnnnnn-a1.mongolab.com:46816/connectedobjdb?replicaSet=rs-ds0000000');
 
 var routes = require('./routes/index');
